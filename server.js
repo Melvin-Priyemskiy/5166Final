@@ -103,7 +103,7 @@ app.post('/api/createaccount', (req, res) => {
 
         for (let i = 0; i < results.length; i++) {
             var dbUsername = results[i].username;
-            if(dbUsername == username)
+            if(dbUsername.toLowerCase() == username.toLowerCase())
             {
                 return res.status(409).json({
                     success: false,
@@ -111,21 +111,21 @@ app.post('/api/createaccount', (req, res) => {
                   });            
             }
         }
-        res.json({
-            success: true,
-            message: 'Account Created Successfully'
-          });   
-
-    });
-
-    connection.query('INSERT INTO users VALUES ("", ?, ?)', [username, password], function (error, results, fields) {
+        connection.query('INSERT INTO users VALUES ("", ?, ?)', [username, password], function (error, results, fields) {
           if (error) 
           {            return res.status(409).json({
             success: false,
             message: 'db not connecting try again',
             error: error
           });  }
-      });    
+      });
+        res.json({
+            success: true,
+            message: 'Account Created Successfully'
+          });   
+
+    });
+    
 
 });
 
