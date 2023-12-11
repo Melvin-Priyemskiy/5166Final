@@ -27,22 +27,6 @@ var connection = mysql.createConnection({
 
 app.use(cors());
 
-const budget = {
-    myBudget: [
-        {
-            title: 'Eat out',
-            budget: 25
-        },
-        {
-            title: 'Rent',
-            budget: 275
-        },
-        {
-            title: 'Grocery',
-            budget: 110
-        },
-    ]
-};
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -50,13 +34,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/api/menu', jwtMW, (req, res) => {
-    console.log(req);
-    res.json({
-        success:true,
-        myContent: 'Secret content that only logged in people can see.'
-    });
-});
 
 app.use(function (err, req, res, next) {
     console.log(err.name === 'UnauthorizedError');
@@ -73,9 +50,7 @@ app.use(function (err, req, res, next) {
     }
 });
 
-app.get('/budget', (req, res) => {
-    res.json(budget);
-});
+
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);
